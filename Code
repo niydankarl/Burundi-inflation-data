@@ -1,0 +1,52 @@
+import pandas as pd
+import zipfile
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+zip_file_name = '/world-bank-burundi-inflation-data.zip'
+csv_file_name = '75fb0162-a2a0-4b6c-8de8-50ba20b5093c_Data.csv'
+
+with zipfile.ZipFile(zip_file_name, 'r') as zf:
+    zf.extract(csv_file_name)
+
+df = pd.read_csv(csv_file_name, na_values='..')
+df_clean = df.dropna(subset=['Country Code']).copy()
+
+df_clean.set_index('Series Name', inplace=True)
+
+# Define cols_annees to select the year columns
+cols_annees = [col for col in df_clean.columns if 'YR' in col]
+
+df_years = df_clean[cols_annees].copy()
+
+df_years.columns = [col.split(' ')[0] for col in df_years.columns]
+
+df_numeric = df_years.replace('..', np.nan).apply(pd.to_numeric)
+
+print("Données nettoyées et prêtes pour l'analyse !")
+display(df_numeric.head())
+
+# Données pour le graphique
+
+inflation_row = df_numeric.loc['Inflation, consumer prices (annual %)']
+annees = inflation_row.index.tolist()
+valeurs_inflation = inflation_row.values
+
+# Création du graphique
+plt.figure(figsize=(12, 6))
+plt.plot(annees, valeurs_inflation, marker='o', linestyle='-', color='red', linewidth=2)
+
+# Mise en Place
+plt.title('Évolution de l\'Inflation au Burundi (2011-2023)', fontsize=14, fontweight='bold')
+plt.xlabel('Année', fontsize=12)
+plt.ylabel('Taux d\'Inflation (%)', fontsize=12)
+plt.grid(True, linestyle='--', alpha=0.7)
+
+#valeurs sur chaque point pour plus de clarté
+for i, v in enumerate(valeurs_inflation):
+    if not np.isnan(v):
+        plt.text(annees[i], v + 0.5, f'{v:.1f}%', ha='center', fontsize=10)
+
+# 4. Affichage
+plt.show()
