@@ -2,6 +2,9 @@
 Script Python permettant l'extraction, le nettoyage et la visualisation graphique des données de la Banque Mondiale concernant le Burundi (Focus actuel : Inflation).
 # Burundi Economic Data Pipeline (World Bank)
 
+# Contexte
+Comprendre l’évolution de l’inflation au Burundi est essentiel pour les ménages et les ONG opérant dans un environnement économique fragile. Ce projet transforme des données brutes en signaux lisibles pour la prise de décision.
+
 ## 📌 Description
 Ce projet automatise l'extraction, le nettoyage et la visualisation des indicateurs macroéconomiques du Burundi à partir des données brutes de la Banque Mondiale. L'objectif est de transformer des fichiers CSV complexes en graphiques exploitables pour le monitoring économique.
 
@@ -20,3 +23,6 @@ Ce projet automatise l'extraction, le nettoyage et la visualisation des indicate
 ## 🚀 Utilisation
 1. Placer le fichier CSV de la Banque Mondiale dans le répertoire racine.
 2. Exécuter le script principal pour générer les graphiques.
+
+## Résultats
+L’analyse révèle une tendance haussière de l’inflation au Burundi sur la période 1998–2024, visualisée sous forme de courbes temporelles générées automatiquement.
